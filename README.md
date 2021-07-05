@@ -1,6 +1,8 @@
 # yonsei-thesis
 Non-official Yonsei University Thesis/Disseration Tex Template
 
+**I will not be responsible for any consequences and losses caused by the use of this template**
+
 * Accompanied with [VSCode LaTeX Workshop](https://marketplace.visualstudio.com/items?itemName=James-Yu.latex-workshop) configuration
 * **XeLaTeX(!!)** is highly recomemended
 * I didn't tested on `pdfLaTeX`
