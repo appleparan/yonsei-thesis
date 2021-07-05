@@ -1,0 +1,254 @@
+{
+    "latex-workshop.latex.recipes": [
+
+        {
+            "name": "latexmk 🔃",
+            "tools": [
+                "latexmk"
+            ]
+        },
+        {
+            "name": "latexmk (latexmkrc)",
+            "tools": [
+                "latexmk_rconly"
+            ]
+        },
+        {
+            "name": "latexmk (lualatex)",
+            "tools": [
+                "lualatexmk"
+            ]
+        },
+        {
+            "name": "latexmk (xelatex)",
+            "tools": [
+                "xelatexmk"
+            ]
+        },
+        {
+            "name": "pdflatex ➞ biber ➞ makeindex ➞ pdflatex × 2",
+            "tools": [
+                "pdflatex",
+                "biber",
+                "makeIndex",
+                "pdflatex",
+                "pdflatex"
+            ]
+        },
+        {
+            "name": "xelatexmk ➞ biber ➞ makeindex ➞ xelatex mk× 2",
+            "tools": [
+                "xelatexmk",
+                "biber",
+                "makeIndex",
+                "xelatexmk",
+                "xelatexmk"
+            ]
+        },
+        {
+            "name": "lualatexmk ➞ biber ➞ makeindex ➞ lualatex mk× 2",
+            "tools": [
+                "lualatexmk",
+                "biber",
+                "makeIndex",
+                "lualatexmk",
+                "lualatexmk"
+            ]
+        },
+        {
+            "name": "Compile Rnw files",
+            "tools": [
+                "rnw2tex",
+                "latexmk"
+            ]
+        },
+        {
+            "name": "Compile Jnw files",
+            "tools": [
+                "jnw2tex",
+                "latexmk"
+            ]
+        },
+        {
+            "name": "tectonic",
+            "tools": [
+                "tectonic"
+            ]
+        }
+    ],
+    "latex-workshop.latex.tools": [
+
+        {
+            "name": "latexmk",
+            "command": "latexmk",
+            "args": [
+                "-xelatex",
+                "-pdfxe",
+                "-shell-escape", // if you want to have the shell-escape flag
+                "-halt-on-error",
+                "-synctex=1",
+                "-interaction=nonstopmode",
+                "-file-line-error",
+                "-outdir=%OUTDIR%",
+                "%DOC%"
+            ],
+            "env": {}
+        },
+        {
+            "name": "lualatexmk",
+            "command": "latexmk",
+            "args": [
+                "-lualatex",
+                "-pdflua",
+                "-shell-escape", // if you want to have the shell-escape flag
+                "-halt-on-error",
+                "-synctex=1",
+                "-interaction=nonstopmode",
+                "-file-line-error",
+                "-outdir=%OUTDIR%",
+                "%DOC%"
+            ],
+            "env": {}
+        },
+        {
+            "name": "xelatexmk",
+            "command": "latexmk",
+            "args": [
+                "-xelatex",
+                "-pdfxe",
+                "-shell-escape", // if you want to have the shell-escape flag
+                "-halt-on-error",
+                "-synctex=1",
+                "-interaction=nonstopmode",
+                "-file-line-error",
+                "-outdir=%OUTDIR%",
+                "%DOC%"
+            ],
+            "env": {}
+        },
+        {
+            "name": "xelatex",
+            "command": "xelatex",
+            "args": [
+                "-shell-escape", // if you want to have the shell-escape flag
+                "-synctex=1",
+                "-interaction=nonstopmode",
+                "-file-line-error",
+                "-outdir=%OUTDIR%",
+                "%DOC%"
+            ],
+            "env": {}
+        },
+        {
+            "name": "latexmk_rconly",
+            "command": "latexmk",
+            "args": [
+                "%DOC%"
+            ],
+            "env": {}
+        },
+        {
+            "name": "pdflatex",
+            "command": "pdflatex",
+            "args": [
+                "-synctex=1",
+                "-interaction=nonstopmode",
+                "-file-line-error",
+                "%DOC%"
+            ],
+            "env": {}
+        },
+        {
+            "name": "bibtex",
+            "command": "bibtex",
+            "args": [
+                "%DOCFILE%"
+            ],
+            "env": {}
+        },
+        {
+            "name": "biber",
+            "command": "biber",
+            "args": [
+                "%DOCFILE%",
+                "--output-directory=%OUTDIR%",
+            ],
+            "env": {}
+        },
+        {
+            "name": "rnw2tex",
+            "command": "Rscript",
+            "args": [
+                "-e",
+                "knitr::opts_knit$set(concordance = TRUE); knitr::knit('%DOCFILE_EXT%')"
+            ],
+            "env": {}
+        },
+        {
+            "name": "jnw2tex",
+            "command": "julia",
+            "args": [
+                "-e",
+                "using Weave; weave(\"%DOC_EXT%\", doctype=\"tex\")"
+            ],
+            "env": {}
+        },
+        {
+            "name": "jnw2texmintex",
+            "command": "julia",
+            "args": [
+                "-e",
+                "using Weave; weave(\"%DOC_EXT%\", doctype=\"texminted\")"
+            ],
+            "env": {}
+        },
+        {
+            "name": "tectonic",
+            "command": "tectonic",
+            "args": [
+                "--synctex",
+                "--keep-logs",
+                "%DOC%.tex"
+            ],
+            "env": {}
+        },
+        { 
+            "name": "makeIndex",
+            "command": "makeindex",
+            "args": [
+                "%DOCFILE%.nlo",
+                "-s",
+                "nomencl.ist",
+                "-o",
+                "%DOCFILE%.nls"
+            ]
+        }
+    ],
+    "latex-workshop.latex.recipe.default": "lastUsed",
+    "latex-workshop.latex.clean.fileTypes": [
+        "*.aux",
+        "*.bbl",
+        "*.blg",
+        "*.idx",
+        "*.ind",
+        "*.lof",
+        "*.lot",
+        "*.out",
+        "*.toc",
+        "*.acn",
+        "*.acr",
+        "*.alg",
+        "*.glg",
+        "*.glo",
+        "*.gls",
+        "*.fls",
+        "*.log",
+        "*.fdb_latexmk",
+        "*.snm",
+        "*.synctex(busy)",
+        "*.synctex.gz(busy)",
+        "*.nav",
+        "*.bcf",
+        "*.run.xml"
+    ]
+}

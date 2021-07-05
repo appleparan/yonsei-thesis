@@ -1,0 +1,349 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Document type, global settings, and packages
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\documentclass[11pt,twoside]{report}   %12 point font for Times New Roman
+\usepackage{graphicx}  %for images and plots
+\usepackage[a4paper,hmargin=3.5cm,vmargin=5.3cm,head=1.5cm,foot=3.2cm]{geometry}
+\usepackage{setspace}   %use this package to set linespacing as desired
+\doublespacing
+\usepackage{times}      %set Times New Roman as the font
+\usepackage[explicit]{titlesec}  %title control and formatting
+\usepackage[titles]{tocloft}  %table of contents control and formatting
+\usepackage[backend=biber,sorting=none,bibstyle=phys]{biblatex}  %reference manager
+\usepackage[bookmarks=true, hidelinks]{hyperref}
+\usepackage[page]{appendix}  %for appendices
+\usepackage[figuresright]{rotating}  %for rotated, landscape images
+\usepackage[normalem]{ulem}  %for underlined section titles
+% \usepackage[english,dutch]{babel}    % i18n
+
+% \usepackage{bold-extra} % include bold and cap\usepackage[dutch,english]{babel}
+
+% https://tex.stackexchange.com/questions/47576/combining-ifxetex-and-ifluatex-with-the-logical-or-operation
+\usepackage{ifxetex,ifluatex}
+\newif\ifxetexorluatex
+\ifxetex
+  \xetexorluatextrue
+\else
+  \ifluatex
+    \xetexorluatextrue
+  \else
+    \xetexorluatexfalse
+  \fi
+\fi
+
+\ifxetexorluatex
+  % \usepackage{stix}
+  \usepackage{fontspec}
+  \usepackage{unicode-math}
+  % \setsansfont{CMU Sans Serif}%{Arial}
+  % \setmainfont{CMU Serif}%{Times New Roman}
+  % \setmonofont{CMU Typewriter Text}%{Consolas}
+  % \defaultfontfeatures{Ligatures={TeX}}
+  \defaultfontfeatures{Scale=MatchLowercase,Ligatures=TeX}
+  % \setmainfont{STIX Two Text}
+  \setmainfont{Noto Serif}
+  \setmathfont{TeX Gyre Schola Math}
+  % https://gist.github.com/dlimpid/5454229
+  \usepackage{xeCJK}
+  \xeCJKsetup{%
+    CJKspace=true,% % true이면 띄어쓰기 사용. 중국어, 일어는 필요 없을수도
+    % CJKmath=true,%  % true면 math environment 안에서 CJK 글자 사용
+    CJKecglue={}%   % Western과 CJK 사이의 공백 지정: {}로 간격을 없앰
+  }
+  \setCJKmainfont[
+    Path=fonts/,
+    Extension=.otf,
+    BoldFont=NotoSerifCJKkr-Bold,
+    AutoFakeSlant,
+    Ligatures=TeX]{NotoSerifCJKkr-Regular.otf}
+  \setCJKsansfont[
+    Path=fonts/,
+    Extension=.otf,
+    BoldFont=NotoSerifCJKkr-Bold,
+    AutoFakeSlant,
+    Ligatures=TeX]{NotoSerifCJKkr-Regular.otf}
+  \setCJKmonofont[
+    Path=fonts/,
+    Extension=.otf,
+    BoldFont=NotoSerifCJKkr-Bold,
+    AutoFakeSlant,
+    Ligatures=TeX]{NotoSerifCJKkr-Regular.otf}
+  \usepackage[scale=0.8]{noto-mono}
+  \setmonofont{Noto Sans Mono}
+  % small url fonts
+  \renewcommand{\UrlFont}{\ttfamily\small}
+\else
+  \usepackage{amssymb,amsmath}
+  \usepackage[T2A,T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{kotex}
+  \usepackage{textcomp} % provide euro and other symbols
+\fi
+
+\ifxetex
+  \XeTeXinputnormalization=1
+\fi
+
+\renewcommand{\floatpagefraction}{0.1} % one figure in one page
+
+\usepackage{url}          % simple URL typesetting
+\usepackage{booktabs}     % proessional-quality tables
+\usepackage{bookmark}
+\usepackage{hyperref}     % hyperlinks
+\usepackage{siunitx}		  % SI unit
+\usepackage{multicol} 		% use multicol in table
+\usepackage{multirow} 		% use multirow in table
+\usepackage{xcolor}			  % color fonts
+\usepackage{adjustbox}    % fit table to page width
+\usepackage[noabbrev,nameinlink]{cleveref}		% for multiple cross-reference
+\usepackage[super]{nth}		% th
+\usepackage{afterpage}    % separate page for floats and tables
+\usepackage{titlefoot}    % keywords on footnote
+\usepackage[intoc]{nomencl}  % nomenclature
+\makenomenclature
+\setlength{\nomitemsep}{-\parsep}
+\setlength{\nomlabelwidth}{1.7cm}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Bibliography
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%Add your bibliography file here
+\addbibresource{references.bib}
+
+% escape % in biber (perl program)
+\DeclareSourcemap{
+  \maps[datatype = bibtex]{
+    \map{
+       \step[fieldsource = abstract,
+          match = \regexp{([^\\])\%},
+          replace = \regexp{$1\\\%}]
+    }
+  }
+}
+
+% prevent certain fields in references from printing in bibliography
+\AtEveryBibitem{\clearfield{issn}}
+\AtEveryBibitem{\clearlist{issn}}
+
+\AtEveryBibitem{\clearfield{language}}
+\AtEveryBibitem{\clearlist{language}}
+
+\AtEveryBibitem{\clearfield{doi}}
+\AtEveryBibitem{\clearlist{doi}}
+
+\AtEveryBibitem{\clearfield{url}}
+\AtEveryBibitem{\clearlist{url}}
+
+\AtEveryBibitem{%
+  \ifentrytype{online}
+    {}
+    {\clearfield{urlyear}\clearfield{urlmonth}\clearfield{urlday}}}
+
+% footnote for keywords in abstract
+% https://tex.stackexchange.com/questions/30720/footnote-without-a-marker
+\newcommand\blfootnote[1]{%
+  \begingroup
+  \renewcommand\thefootnote{}\footnote{#1}%
+  \addtocounter{footnote}{-1}%
+  \endgroup
+}
+%%%%%%%%%%%%%%%%%%%%%%
+% Start of Document
+%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{document}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Cover Page
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\input{cover.tex}
+\currentpdfbookmark{Cover Page}{coverPage}  %add PDF bookmark for this page
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Title Page
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\input{titlePage.tex}
+\currentpdfbookmark{Title Page}{titlePage}  %add PDF bookmark for this page
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Approval Page
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\input{approvalPage.tex}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Acknowledgments
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% \pagenumbering{roman}
+% \addcontentsline{toc}{chapter}{Acknowledgments}
+% \setcounter{page}{5} % set the page number appropriately based on the number of intro pages
+\input{acknowledgements.tex}
+
+%\addtocontents{toc}{\cftpagenumbersoff{chapter}}
+
+%\currentpdfbookmark{Acknowledgments}{acknowledgments}
+%\addtocontents{toc}{\cftpagenumberson{chapter}}
+% Set location of page numbering as just below text body
+\newgeometry{hmargin=3.5cm,vmargin=5.3cm,head=1.5cm,foot=3.2cm,footskip=1cm}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Table of Contents
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\pagenumbering{roman}
+\setcounter{page}{1} % set the page number appropriately based on the number of intro pages
+% Format for Table of Contents
+\renewcommand{\cftchapdotsep}{\cftdotsep}  %add dot separators
+\renewcommand{\cftchapfont}{\bfseries}  %set title font weight
+\renewcommand{\cftchappagefont}{}  %set page number font weight
+\renewcommand{\cftchappresnum}{Chapter }
+\renewcommand{\cftchapaftersnum}{:}
+\renewcommand{\cftchapnumwidth}{6em}
+\renewcommand{\cftchapafterpnum}{\vskip\baselineskip} %set correct spacing for entries in single space environment
+\renewcommand{\cftsecafterpnum}{\vskip\baselineskip}  %set correct spacing for entries in single space environment
+\renewcommand{\cftsubsecafterpnum}{\vskip\baselineskip} %set correct spacing for entries in single space environment
+\renewcommand{\cftsubsubsecafterpnum}{\vskip\baselineskip} %set correct spacing for entries in single space environment
+
+%format title font size and position (this also applys to list of figures and list of tables)
+\titleformat{\chapter}[display]
+{\normalfont\bfseries\filcenter}{\chaptertitlename\ \thechapter}{0pt}{\MakeUppercase{#1}}
+
+\renewcommand\contentsname{Table of Contents}
+
+\begin{singlespace}
+\tableofcontents
+\end{singlespace}
+
+\currentpdfbookmark{Table of Contents}{TOC}
+
+\clearpage
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% List of figures and tables
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\addcontentsline{toc}{chapter}{List of Tables}
+\begin{singlespace}
+	\setlength\cftbeforetabskip{\baselineskip}  %manually set spacing between entries
+	\listoftables
+\end{singlespace}
+
+\clearpage
+
+\addcontentsline{toc}{chapter}{List of Figures}
+\begin{singlespace}
+\setlength\cftbeforefigskip{\baselineskip}  %manually set spacing between entries
+\listoffigures
+\end{singlespace}
+
+\clearpage
+
+\printnomenclature
+\clearpage
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% This is the Abstract
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\addcontentsline{toc}{chapter}{Abstract}
+% \setcounter{page}{5} % set the page number appropriately based on the number of intro pages
+\input{abstract-eng.tex}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+% Remark
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\input{remark.tex}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+% Chapters
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%
+% formatting
+%%%%%%%%%%%%%%%%%%%%%%
+
+% resume page numbering for rest of document
+\clearpage
+\pagenumbering{arabic}
+\setcounter{page}{1} % set the page number appropriately
+
+% Adjust chapter title formatting
+\newcommand{\chapternamefont}{\scshape\Large}% Chapter name font
+\newcommand{\chaptertitlefont}{\LARGE\bfseries}% Chapter title font
+\titleformat{\chapter}[display]
+{\normalfont\bfseries\chapternamefont\raggedright}{\MakeUppercase\chaptertitlefont\chaptertitlename\ \thechapter}{0pt}{\MakeUppercase{#1}}  %spacing between titles
+\titlespacing*{\chapter}
+  {0pt}{\topskip}{30pt}	%controls vertical margins on title
+
+% Adjust section title formatting
+\titleformat{\section}{\normalfont\bfseries}{\thesection}{1em}{#1}
+
+% Adjust subsection title formatting
+% \titleformat{\subsection}{\normalfont}{\uline{\thesubsection}}{0em}{\uline{\hspace{1em}#1}}
+\titleformat{\subsection}{\normalfont\bfseries}{\thesubsection}{1em}{#1}
+
+% Adjust subsubsection title formatting
+\titleformat{\subsubsection}{\normalfont\itshape}{\thesubsection}{1em}{#1}
+
+%%%%%%%%%%%%%%%%
+% Chapter 1
+%%%%%%%%%%%%%%%%
+
+\input{chapter1.tex}
+
+%%%%%%%%%%%%%%%%
+% Chapter 2
+%%%%%%%%%%%%%%%%
+
+\input{chapter2.tex}
+
+%%%%%%%%%%%%%%%%
+% Chapter 3
+%%%%%%%%%%%%%%%%
+
+\input{chapter3.tex}
+
+%%%%%%%%%%%%%%%%
+% Chapter 4
+%%%%%%%%%%%%%%%%
+
+\input{chapter4.tex}
+
+%%%%%%%%%%%%%%%%
+% Chapter 5
+%%%%%%%%%%%%%%%%
+
+\input{chapter5.tex}
+
+%%%%%%%%%%%%%%%%
+% Appendices
+%%%%%%%%%%%%%%%%
+
+\input{appendix.tex}
+
+%%%%%%%%%%%%%%%%
+% References
+%%%%%%%%%%%%%%%%
+% \nocites
+
+\setlength\bibitemsep{\baselineskip}  %manually set separataion betwen items in bibliography to double space
+\printbibliography[title={References}]
+
+\addcontentsline{toc}{chapter}{References}  %add References section to Table of Contents
+
+%%%%%%%%%%%%%%%%
+% Summary (Korean)
+%%%%%%%%%%%%%%%%
+
+\addcontentsline{toc}{chapter}{국문초록}  %add References section to Table of Contents
+\input{abstract-kor.tex}
+
+\end{document}
