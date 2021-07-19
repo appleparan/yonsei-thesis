@@ -1,32 +1,12 @@
 \chapter{Methods}
 \label{chap:methods}
 
-Table can be cited as \Cref{tab:chap-2}.
-
-In \Cref{fig:figure-portrait} or \Cref{fig:figure-portrait}, 
+In \Cref{fig:figure-portrait} or \Cref{fig:figure-landscape},
 Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat \cite{ref1}. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur \cite{ref2}. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum \cite{ref3}.
 
-\begin{table}
-	\centering
-	
-	\begin{tabular}{ccc}
-	\toprule
-	x & f(x) & g(x) \\
-	\midrule
-	1 & 6 & 4  \\
-	2 & 6 & 3  \\
-	3 & 6 & 2  \\
-	4 & 6 & 2  \\
-	\bottomrule
-
-	\end{tabular}
-	\caption{This is an example Table.}
-	\label{tab:chap-2}
-	\clearpage
-\end{table}
-
 \afterpage{
-	\begin{figure}
+	\clearpage
+	\begin{figure}[ht]
 		\includegraphics[width=\textwidth]{figures/exampleFigure.png}
 		\caption{Portrait figure}
 		\label{fig:figure-portrait}
@@ -35,7 +15,8 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor i
 }
 
 \afterpage{
-	\begin{sidewaysfigure}
+	\clearpage
+	\begin{sidewaysfigure}[ht]
 		\includegraphics[width=\textwidth]{figures/exampleFigure.png}
 		\caption{Landscape figure}
 		\label{fig:figure-landscape}
