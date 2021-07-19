@@ -16,5 +16,12 @@ Non-official Yonsei University Thesis/Disseration Tex Template
 * Mono : [Noto Sans Mono](https://www.google.co.kr/get/noto/#mono-mono)
 * CJK : [Noto Serif KR](https://fonts.google.com/specimen/Noto+Serif+KR?query=Noto+serif)
 
+# Known Issue
+
+* luaLaTeX partially works but not be guaranteed
+    - Hangul support is limited in luaLaTeX
+* **pdfLaTeX doesn't work** due to conflict between `kotex` and `siunitx`
+    - If you disable `siunitx`, this document can be compiled with pdfLaTeX
+
 # Reference
 * [Georgia Tech - Thesis Template](https://github.com/manoj-c/GATechThesis)
