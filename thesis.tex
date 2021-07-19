@@ -2,22 +2,10 @@
 % Document type, global settings, and packages
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\documentclass[11pt,twoside]{report}   %12 point font for Times New Roman
-\usepackage{graphicx}  %for images and plots
+\documentclass[english,11pt,twoside]{report}   %12 point font for Times New Roman
 \usepackage[a4paper,hmargin=3.5cm,vmargin=5.3cm,head=1.5cm,foot=3.2cm]{geometry}
-\usepackage{setspace}   %use this package to set linespacing as desired
-\doublespacing
-\usepackage{times}      %set Times New Roman as the font
-\usepackage[explicit]{titlesec}  %title control and formatting
-\usepackage[titles]{tocloft}  %table of contents control and formatting
-\usepackage[backend=biber,sorting=none,bibstyle=phys]{biblatex}  %reference manager
-\usepackage[bookmarks=true, hidelinks]{hyperref}
-\usepackage[page]{appendix}  %for appendices
-\usepackage[figuresright]{rotating}  %for rotated, landscape images
-\usepackage[normalem]{ulem}  %for underlined section titles
-% \usepackage[english,dutch]{babel}    % i18n
-
-% \usepackage{bold-extra} % include bold and cap\usepackage[dutch,english]{babel}
+\usepackage[bookmarks=true, hidelinks]{hyperref}     % hyperlink
+\usepackage{url}          % simple URL typesetting
 
 % https://tex.stackexchange.com/questions/47576/combining-ifxetex-and-ifluatex-with-the-logical-or-operation
 \usepackage{ifxetex,ifluatex}
@@ -36,49 +24,74 @@
   % \usepackage{stix}
   \usepackage{fontspec}
   \usepackage{unicode-math}
-  % \setsansfont{CMU Sans Serif}%{Arial}
-  % \setmainfont{CMU Serif}%{Times New Roman}
-  % \setmonofont{CMU Typewriter Text}%{Consolas}
-  % \defaultfontfeatures{Ligatures={TeX}}
+
   \defaultfontfeatures{Scale=MatchLowercase,Ligatures=TeX}
   % \setmainfont{STIX Two Text}
   \setmainfont{Noto Serif}
   \setmathfont{TeX Gyre Schola Math}
-  % https://gist.github.com/dlimpid/5454229
-  \usepackage{xeCJK}
-  \xeCJKsetup{%
-    CJKspace=true,% % true이면 띄어쓰기 사용. 중국어, 일어는 필요 없을수도
-    % CJKmath=true,%  % true면 math environment 안에서 CJK 글자 사용
-    CJKecglue={}%   % Western과 CJK 사이의 공백 지정: {}로 간격을 없앰
-  }
-  \setCJKmainfont[
-    Path=fonts/,
-    Extension=.otf,
-    BoldFont=NotoSerifCJKkr-Bold,
-    AutoFakeSlant,
-    Ligatures=TeX]{NotoSerifCJKkr-Regular.otf}
-  \setCJKsansfont[
-    Path=fonts/,
-    Extension=.otf,
-    BoldFont=NotoSerifCJKkr-Bold,
-    AutoFakeSlant,
-    Ligatures=TeX]{NotoSerifCJKkr-Regular.otf}
-  \setCJKmonofont[
-    Path=fonts/,
-    Extension=.otf,
-    BoldFont=NotoSerifCJKkr-Bold,
-    AutoFakeSlant,
-    Ligatures=TeX]{NotoSerifCJKkr-Regular.otf}
   \usepackage[scale=0.8]{noto-mono}
   \setmonofont{Noto Sans Mono}
   % small url fonts
   \renewcommand{\UrlFont}{\ttfamily\small}
+
+  \ifxetex
+    % https://gist.github.com/dlimpid/5454229
+    % Use xeCJK in XeLaTeX
+    \usepackage{xeCJK}
+    \xeCJKsetup{%
+      CJKspace=true,% % true이면 띄어쓰기 사용. 중국어, 일어는 필요 없을수도
+      % CJKmath=true,%  % true면 math environment 안에서 CJK 글자 사용
+      CJKecglue={}%   % Western과 CJK 사이의 공백 지정: {}로 간격을 없앰
+    }
+    \setCJKmainfont[
+      Path=fonts/,
+      Extension=.otf,
+      BoldFont=NotoSerifCJKkr-Bold,
+      AutoFakeSlant,
+      Ligatures=TeX]{NotoSerifCJKkr-Regular.otf}
+    \setCJKsansfont[
+      Path=fonts/,
+      Extension=.otf,
+      BoldFont=NotoSerifCJKkr-Bold,
+      AutoFakeSlant,
+      Ligatures=TeX]{NotoSerifCJKkr-Regular.otf}
+    \setCJKmonofont[
+      Path=fonts/,
+      Extension=.otf,
+      BoldFont=NotoSerifCJKkr-Bold,
+      AutoFakeSlant,
+      Ligatures=TeX]{NotoSerifCJKkr-Regular.otf}
+  \fi
+
+  \ifluatex
+    \usepackage[hangul]{luatexko}
+    \setmainhangulfont[
+      Path=fonts/,
+      UprightFont=*-Regular,
+      BoldFont=*-Bold,
+      Extension=.otf,
+      AutoFakeSlant,
+      Ligatures=TeX]{NotoSerifCJKkr}
+    \hangulbyhangulfont=1
+    \setmainfont{Noto Serif}
+    \setmathfont{TeX Gyre Schola Math}
+    \usepackage[scale=0.8]{noto-mono}
+    \setmonofont{Noto Sans Mono}
+  \fi
 \else
-  \usepackage{amssymb,amsmath}
-  \usepackage[T2A,T1]{fontenc}
+  % pdflatex doesn't work due to siunitx and kotex conflict
+  % https://t.co/PgBfFh9rTU?amp=1
+  \usepackage{amssymb,amsmath,amsthm,amsfonts}
+  \usepackage[T1]{fontenc}
   \usepackage[utf8]{inputenc}
-  \usepackage{kotex}
+  \usepackage[finemath]{kotex} % Use kotex in PDFLaTeX
+  % \usepackage{CJKutf8}
   \usepackage{textcomp} % provide euro and other symbols
+
+  % use nanum font in Korean
+  \usepackage{dhucs-nanumfont}
+  % otherwise, use Noto fonts
+  \usepackage{noto}
 \fi
 
 \ifxetex
@@ -87,19 +100,33 @@
 
 \renewcommand{\floatpagefraction}{0.1} % one figure in one page
 
-\usepackage{url}          % simple URL typesetting
-\usepackage{booktabs}     % proessional-quality tables
-\usepackage{bookmark}
-\usepackage{hyperref}     % hyperlinks
-\usepackage{siunitx}		  % SI unit
-\usepackage{multicol} 		% use multicol in table
-\usepackage{multirow} 		% use multirow in table
-\usepackage{xcolor}			  % color fonts
-\usepackage{adjustbox}    % fit table to page width
-\usepackage[noabbrev,nameinlink]{cleveref}		% for multiple cross-reference
-\usepackage[super]{nth}		% th
+\usepackage[english]{babel}    % babel set language
+\usepackage[bibencoding=utf8,backend=biber,sorting=none,bibstyle=phys]{biblatex}  %reference manager
+\usepackage{csquotes}
+
+\usepackage{setspace}   %use this package to set linespacing as desired
+\doublespacing
 \usepackage{afterpage}    % separate page for floats and tables
 \usepackage{titlefoot}    % keywords on footnote
+\usepackage{bookmark}
+\usepackage[explicit]{titlesec}  %title control and formatting
+\usepackage[titles]{tocloft}  %table of contents control and formatting
+\usepackage[page]{appendix}  %for appendices
+\usepackage[normalem]{ulem}  %for underlined section titles
+
+\usepackage{graphicx}  %for images and plots
+\usepackage[figuresright]{rotating}  %for rotated, landscape images
+\usepackage{adjustbox}    % fit table to page width
+
+\usepackage{booktabs}     % proessional-quality tables
+\usepackage{multicol} 		% use multicol in table
+\usepackage{multirow} 		% use multirow in table
+
+\usepackage{xcolor}			  % color fonts
+\usepackage[super]{nth}		% th
+\usepackage{siunitx}		  % SI unit
+
+\usepackage[noabbrev,nameinlink]{cleveref}		% for multiple cross-reference
 \usepackage[intoc]{nomencl}  % nomenclature
 \makenomenclature
 \setlength{\nomitemsep}{-\parsep}
@@ -112,7 +139,7 @@
 %Add your bibliography file here
 \addbibresource{references.bib}
 
-% escape % in biber (perl program)
+% escape % in abstract of bibfile (due to it is perl program)
 \DeclareSourcemap{
   \maps[datatype = bibtex]{
     \map{
@@ -124,6 +151,9 @@
 }
 
 % prevent certain fields in references from printing in bibliography
+\AtEveryBibitem{\clearfield{abstract}}
+\AtEveryBibitem{\clearlist{abstract}}
+
 \AtEveryBibitem{\clearfield{issn}}
 \AtEveryBibitem{\clearlist{issn}}
 
@@ -162,6 +192,7 @@
 \input{cover.tex}
 \currentpdfbookmark{Cover Page}{coverPage}  %add PDF bookmark for this page
 
+Test
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Title Page
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -250,7 +281,6 @@
 \addcontentsline{toc}{chapter}{Abstract}
 % \setcounter{page}{5} % set the page number appropriately based on the number of intro pages
 \input{abstract-eng.tex}
-
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %
