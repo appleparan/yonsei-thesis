@@ -26,13 +26,19 @@
             ]
         },
         {
-            "name": "pdflatex ➞ biber ➞ makeindex ➞ pdflatex × 2",
+            "name": "latexmk (pdflatex)",
             "tools": [
-                "pdflatex",
-                "biber",
+                "pdflatexmk"
+            ]
+        },
+        {
+            "name": "pdflatexmk ➞ biber ➞ makeindex ➞ pdflatexmk × 2",
+            "tools": [
+                "pdflatexmk",
+                "biber-pdflatex",
                 "makeIndex",
-                "pdflatex",
-                "pdflatex"
+                "pdflatexmk",
+                "pdflatexmk"
             ]
         },
         {
@@ -111,14 +117,11 @@
             "env": {}
         },
         {
-            "name": "xelatexmk",
-            "command": "latexmk",
+            "name": "lualatex",
+            "command": "lualatex",
             "args": [
-                "-xelatex",
-                "-pdfxe",
                 "-shell-escape", // if you want to have the shell-escape flag
                 "-halt-on-error",
-                "-synctex=1",
                 "-interaction=nonstopmode",
                 "-file-line-error",
                 "-outdir=%OUTDIR%",
@@ -131,6 +134,22 @@
             "command": "xelatex",
             "args": [
                 "-shell-escape", // if you want to have the shell-escape flag
+                "-halt-on-error",
+                "-interaction=nonstopmode",
+                "-file-line-error",
+                "-outdir=%OUTDIR%",
+                "%DOC%"
+            ],
+            "env": {}
+        },
+        {
+            "name": "xelatexmk",
+            "command": "latexmk",
+            "args": [
+                "-xelatex",
+                "-pdfxe",
+                "-shell-escape", // if you want to have the shell-escape flag
+                "-halt-on-error",
                 "-synctex=1",
                 "-interaction=nonstopmode",
                 "-file-line-error",
@@ -148,12 +167,30 @@
             "env": {}
         },
         {
-            "name": "pdflatex",
-            "command": "pdflatex",
+            "name": "pdflatexmk",
+            "command": "latexmk",
             "args": [
+                "-pdflatex",
+                "-bibtex",
+                "-shell-escape", // if you want to have the shell-escape flag
+                "-halt-on-error",
                 "-synctex=1",
                 "-interaction=nonstopmode",
                 "-file-line-error",
+                "-outdir=%OUTDIR%",
+                "%DOC%"
+            ],
+            "env": {}
+        },
+        {
+            "name": "pdflatex",
+            "command": "pdflatex",
+            "args": [
+                "-shell-escape", // if you want to have the shell-escape flag
+                "-halt-on-error",
+                "-interaction=nonstopmode",
+                "-file-line-error",
+                "-outdir=%OUTDIR%",
                 "%DOC%"
             ],
             "env": {}
@@ -171,6 +208,16 @@
             "command": "biber",
             "args": [
                 "%DOCFILE%",
+                "--output-directory=%OUTDIR%",
+            ],
+            "env": {}
+        },
+        {
+            "name": "biber-pdflatex",
+            "command": "biber",
+            "args": [
+                "%DOCFILE%",
+                "--output-safechars",
                 "--output-directory=%OUTDIR%",
             ],
             "env": {}
@@ -212,7 +259,7 @@
             ],
             "env": {}
         },
-        { 
+        {
             "name": "makeIndex",
             "command": "makeindex",
             "args": [
