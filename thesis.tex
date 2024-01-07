@@ -60,10 +60,10 @@
       Ligatures=TeX]{NotoSerifkr-Regular.otf}
     \setCJKmonofont[
       Path=fonts/,
-      Extension=.otf,
-      BoldFont=NotoSansMono-Regular,
+      Extension=.ttf,
+      BoldFont=NotoSansMono-Bold,
       AutoFakeSlant,
-      Ligatures=TeX]{NotoSansMono-Regular.otf}
+      Ligatures=TeX]{NotoSansMono-Regular.ttf}
   \fi
 
   \ifluatex
@@ -120,6 +120,8 @@
 \usepackage{graphicx}  %for images and plots
 \usepackage[figuresright]{rotating}  %for rotated, landscape images
 \usepackage{adjustbox}    % fit table to page width
+\usepackage{algorithm}      % algorithm
+\usepackage{algpseudocode}  % algorithm
 
 \usepackage{booktabs}     % proessional-quality tables
 \usepackage{multicol} 		% use multicol in table
