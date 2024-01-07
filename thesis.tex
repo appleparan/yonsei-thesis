@@ -376,6 +376,10 @@ Test
 % Summary (Korean)
 %%%%%%%%%%%%%%%%
 
+% To fix incorrect incorrect page numbering in ToC, add cleardoublepage and phantomsection
+% https://tex.stackexchange.com/questions/23499/incorrect-bookmarks-and-page-number-in-table-of-contents
+\cleardoublepage
+\phantomsection
 \addcontentsline{toc}{chapter}{국문초록}  %add References section to Table of Contents
 \input{abstract-kor.tex}
 
