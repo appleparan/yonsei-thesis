@@ -21,7 +21,10 @@
 \fi
 
 \ifxetexorluatex
+  % To fix LaTeX command is already defined error, load amssymb before unicode-math
+  % https://tex.stackexchange.com/a/547153/56364
   % \usepackage{stix}
+  \usepackage{amssymb}
   \usepackage{fontspec}
   \usepackage{unicode-math}
 
@@ -81,7 +84,7 @@
 \else
   % pdflatex doesn't work due to siunitx and kotex conflict
   % https://t.co/PgBfFh9rTU?amp=1
-  \usepackage{amssymb,amsmath,amsthm,amsfonts}
+  \usepackage{amsmath,amsthm,amsfonts}
   \usepackage[T1]{fontenc}
   \usepackage[utf8]{inputenc}
   \usepackage[finemath]{kotex} % Use kotex in PDFLaTeX
